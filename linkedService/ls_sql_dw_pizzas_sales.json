@@ -1,0 +1,17 @@
+{
+	"name": "ls_sql_dw_pizzas_sales",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "sql-ucb-sisinfo-10910200.database.windows.net",
+			"database": "dw_pizzas_sales",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "ruben",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDcwNUM0MTY5LTQxRjktNDVFMC1CMkEwLTI3NDY2RjMxMUNCRF8yNzQ4NTljMC02YTllLTQ2MDEtYTRiZi0wYTE5NDE0M2NlNzkiDQp9"
+		}
+	}
+}
