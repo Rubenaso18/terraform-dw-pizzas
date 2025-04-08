@@ -49,6 +49,201 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_dim_orders')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_dw_pizzas_sales",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dw"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ORDER_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "FECHA",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIM_ORDERS"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_dw_pizzas_sales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dim_pizza')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_dw_pizzas_sales",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dw"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "PIZZA_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "SIZE",
+						"type": "varchar"
+					},
+					{
+						"name": "PRICE",
+						"type": "decimal",
+						"precision": 9,
+						"scale": 2
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIM_PIZZA"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_dw_pizzas_sales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dim_pizza_types')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_dw_pizzas_sales",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dw"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "PIZZA_TYPE_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "CATEGORY",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIM_TIPO_PIZZA"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_dw_pizzas_sales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_dim_tipo_pizza')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_dw_pizzas_sales",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dw"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "PIZZA_TYPE_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "CATEGORY",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "DIM_TIPO_PIZZA"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_dw_pizzas_sales')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_hechos_pizzas_sales')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sql_dw_pizzas_sales",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "dw"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ORDER_DETAILS_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CANTIDAD",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ORDER_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PIZZA_TYPE_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "PIZZA_ID",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "HECHOS_PIZZAS_SALES"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sql_dw_pizzas_sales')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/order_details_csv')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -139,63 +334,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_sa_pizzas_sales_csv')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_sa_pizzas_sales_csv')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('ls_sa_pizzas_sales_csv_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_sql_db_pizzas_sales')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('ls_sql_db_pizzas_sales_properties_typeProperties_server')]",
-					"database": "[parameters('ls_sql_db_pizzas_sales_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('ls_sql_db_pizzas_sales_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('ls_sql_db_pizzas_sales_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_sql_dw_pizzas_sales')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('ls_sql_dw_pizzas_sales_properties_typeProperties_server')]",
-					"database": "[parameters('ls_sql_dw_pizzas_sales_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('ls_sql_dw_pizzas_sales_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('ls_sql_dw_pizzas_sales_password')]"
-					}
-				}
-			},
-			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pizzas_csv')]",
@@ -290,77 +428,61 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_dim_pizza')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/ls_sa_pizzas_sales_csv')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_dw_pizzas_sales",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "dw"
-				},
 				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "PIZZA_ID",
-						"type": "varchar"
-					},
-					{
-						"name": "SIZE",
-						"type": "varchar"
-					},
-					{
-						"name": "PRICE",
-						"type": "decimal",
-						"precision": 9,
-						"scale": 2
-					}
-				],
+				"type": "AzureBlobStorage",
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "DIM_PIZZA"
+					"connectionString": "[parameters('ls_sa_pizzas_sales_csv_connectionString')]"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_dw_pizzas_sales')]"
-			]
+			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_dim_orders')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/ls_sql_db_pizzas_sales')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_dw_pizzas_sales",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "dw"
-				},
 				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ORDER_ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "FECHA",
-						"type": "date"
-					}
-				],
+				"type": "AzureSqlDatabase",
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "DIM_ORDERS"
+					"server": "[parameters('ls_sql_db_pizzas_sales_properties_typeProperties_server')]",
+					"database": "[parameters('ls_sql_db_pizzas_sales_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ls_sql_db_pizzas_sales_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_sql_db_pizzas_sales_password')]"
+					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_dw_pizzas_sales')]"
-			]
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_sql_dw_pizzas_sales')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('ls_sql_dw_pizzas_sales_properties_typeProperties_server')]",
+					"database": "[parameters('ls_sql_dw_pizzas_sales_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ls_sql_dw_pizzas_sales_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ls_sql_dw_pizzas_sales_password')]"
+					}
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }
