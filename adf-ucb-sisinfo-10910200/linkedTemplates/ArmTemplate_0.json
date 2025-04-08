@@ -196,6 +196,54 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_sa_pizzas_sales_csv')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pizzas_csv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_sa_pizzas_sales_csv",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "db"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "pizzas.csv",
+						"container": "pizzas-sales"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "pizza_id",
+						"type": "String"
+					},
+					{
+						"name": "pizza_type_id",
+						"type": "String"
+					},
+					{
+						"name": "size",
+						"type": "String"
+					},
+					{
+						"name": "price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_sa_pizzas_sales_csv')]"
+			]
 		}
 	]
 }
