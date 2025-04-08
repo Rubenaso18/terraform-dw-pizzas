@@ -216,43 +216,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_dim_tipo_pizza')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_sql_dw_pizzas_sales",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "dw"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "PIZZA_TYPE_ID",
-						"type": "varchar"
-					},
-					{
-						"name": "NAME",
-						"type": "varchar"
-					},
-					{
-						"name": "CATEGORY",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "DIM_TIPO_PIZZA"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_sql_dw_pizzas_sales')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ds_hechos_pizzas_sales')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
